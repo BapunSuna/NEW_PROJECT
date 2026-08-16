@@ -5,10 +5,14 @@ import sys
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
+# ColumnTransformer allows us to selectively apply data preparation transformers to different columns in your dataset.
+# Its useful when you have a mix of numerical and categorical data that require different preprocessing steps.
 from sklearn.impute import SimpleImputer
+# SimpleImputer is used to handle missing values by replacing blank or NaN entries with a statistical placeholder or a fixed value.
 from sklearn.pipeline import Pipeline
+# Pipeline is designed to chain multiple data preprocessing steps and a final machine learning model into a single cohesive estimator.
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-
+# StandardScaler is used to standardise dataset features. It centers and scales features individually so that it has a mean of 0 and a variance of 1
 
 from src.exception import CustomException
 from src.logger import logging
@@ -79,13 +83,15 @@ class DataTransformation:
             target_column_name = "math_score"
             numerical_columns = ["writing_score", "reading_score"]
 
-            input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
+            input_feature_train_df = train_df.drop(columns=[target_column_name])
             target_feature_train_df = train_df[target_column_name]
 
-            input_feature_test_df = test_df.drop(columns=[target_column_name], axis=1)
+            input_feature_test_df = test_df.drop(columns=[target_column_name])
             target_feature_test_df = test_df[target_column_name]
 
-            logging.info("Applying preprocessing object on training and testing dataframes")
+            logging.info(
+                "Applying preprocessing object on training and testing dataframes"
+            )
 
             input_feature_train_arr = preprocessing_obj.fit_transform(
                 input_feature_train_df
